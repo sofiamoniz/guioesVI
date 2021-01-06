@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+		<script>
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 70, window.innerWidth/window.innerHeight, 0.1, 1000 );
+            camera.position.z = 10;
+
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.setClearColor( 0xff0000, 1 ); 
+            document.body.appendChild( renderer.domElement );
+            
+
+            var geometry = new THREE.Geometry();
+            geometry.vertices= [new THREE.Vector3(-1,-1,0), new THREE.Vector3(1,-1,0), new THREE.Vector3(1,1,0)]; 
+            geometry.faces = [new THREE.Face3(0,1,2)];
+            var mesh= new THREE.Mesh( geometry, new THREE.MeshBasicMaterial({ color: "black" }) );
+            scene.add(mesh);
+
+
+            renderer.render(scene, camera);
+
+			
+
+		</script>
+	</body>
+</html>

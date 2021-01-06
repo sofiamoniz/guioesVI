@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+		<script>
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 70, window.innerWidth/window.innerHeight, 0.1, 1000 );
+            camera.position.z = 10;
+
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.setClearColor( 0x000000, 1 ); 
+            document.body.appendChild( renderer.domElement );
+            
+
+            var geometry = new THREE.Geometry();
+
+            // Make the simplest shape possible: a triangle.
+            geometry.vertices= [new THREE.Vector3(-1,-1,0), new THREE.Vector3(1,-1,0), new THREE.Vector3(1,1,0)]; 
+
+            // Note that I'm assigning the face to a variable
+            // I'm not just shoving it into the geometry.
+            geometry.faces = [new THREE.Face3(0,1,2)];
+
+            // Assign the colors to the vertices of the face.
+            geometry.faces[0].vertexColors[0] = new THREE.Color(0xFF0000) //red
+            geometry.faces[0].vertexColors[1] = new THREE.Color("yellow"); // yellow
+            geometry.faces[0].vertexColors[2] = new THREE.Color(0x0000ff); // blue  
+
+            // Using this material is important.
+            var geometryMaterial = new THREE.MeshBasicMaterial({
+            vertexColors:THREE.VertexColors});
+
+            var mesh = new THREE.Mesh(geometry, geometryMaterial);
+
+            scene.add(mesh)
+
+            renderer.render(scene, camera);
+
+			
+
+		</script>
+	</body>
+</html>

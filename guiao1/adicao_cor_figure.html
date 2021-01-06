@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+		<script>
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 70, window.innerWidth/window.innerHeight, 0.1, 1000 );
+            camera.position.z = 2;
+
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.setClearColor( 0x000000, 1 ); 
+            document.body.appendChild( renderer.domElement );
+            
+
+            var geometry = new THREE.Geometry();
+            //Yellow triangle
+            geometry.vertices.push(new THREE.Vector3(0.0,  0.0,  0.0), new THREE.Vector3(-0.35,-1.0,  0.0), new THREE.Vector3(-0.7,  0.25, 0.0)); 
+            geometry.faces.push(new THREE.Face3(1,0,2)); 
+            var mesh= new THREE.Mesh( geometry, new THREE.MeshBasicMaterial({ color: "yellow" , side: THREE.DoubleSide}) );
+            scene.add(mesh);
+            //
+
+            //Pink triangle
+            var geometry2 = new THREE.Geometry();
+            geometry2.vertices.push(new THREE.Vector3(0.0,  0.0,  0.0), new THREE.Vector3( 0.5,  0.75, 0.0), new THREE.Vector3( 1.0,  0.0,  0.0)); 
+            geometry2.faces.push(new THREE.Face3(2,1,0)); 
+            var mesh2= new THREE.Mesh( geometry2, new THREE.MeshBasicMaterial({ color: "magenta" , side: THREE.DoubleSide}) );
+            scene.add(mesh2);
+            //
+
+            //colored triangle
+            var geometry3 = new THREE.Geometry();
+            geometry3.vertices.push(new THREE.Vector3(-0.2, 0.15, 0.0), new THREE.Vector3( 0.35, 0.65, 0.0), new THREE.Vector3(-0.85, 0.9,  0.0 )); 
+            geometry3.faces.push(new THREE.Face3(2,1,0));
+
+            // Assign the colors to the vertices of the face.
+            
+            geometry3.faces[0].vertexColors[0] = new THREE.Color(0xFF0000) //red
+            geometry3.faces[0].vertexColors[1] = new THREE.Color("green"); // green
+            geometry3.faces[0].vertexColors[2] = new THREE.Color(0x0000ff); // blue  
+
+            // Using this material is important.
+            var geometryMaterial = new THREE.MeshBasicMaterial({
+            vertexColors:THREE.VertexColors, side: THREE.DoubleSide});
+
+            var mesh3 = new THREE.Mesh(geometry3, geometryMaterial);
+
+            scene.add(mesh3)
+
+            //wireframe triangle
+            var geometry4 = new THREE.Geometry();
+            geometry4.vertices.push(new THREE.Vector3(0.15,-0.95, 0.0), new THREE.Vector3( 0.90,-0.7,  0.0), new THREE.Vector3( 0.65, 0.10, 0.0)); 
+            geometry4.faces.push(new THREE.Face3(2,1,0)); 
+            var mesh4= new THREE.Mesh( geometry4, new THREE.MeshBasicMaterial({ wireframe: true , side: THREE.DoubleSide}) );
+            scene.add(mesh4);
+            //
+
+            //final
+            renderer.render(scene, camera);
+
+			
+
+		</script>
+	</body>
+</html>
