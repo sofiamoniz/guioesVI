@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+        <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+        <script src="OrbitControls.js"></script>
+		<script>
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+            
+            const controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+            //controls.update() must be called after any manual changes to the camera's transform
+            controls.update();
+
+            const textureLoader = new THREE.TextureLoader();                             
+            const texture0 = textureLoader.load( 'Im1.jpg' );                       
+            const texture1 = textureLoader.load( 'Im2.jpg' );                       
+            const texture2 = textureLoader.load( 'Im3.jpg' );                       
+            const texture3 = textureLoader.load( 'Im4.jpg' );                       
+            const texture4 = textureLoader.load( 'Im5.jpg' );                       
+            const texture5 = textureLoader.load( 'Im6.jpg' );      
+
+            const cubeMaterials = [];                                                   
+            cubeMaterials.push(new THREE.MeshBasicMaterial( { map: texture0 } ),                      
+                                new THREE.MeshBasicMaterial( { map: texture1 } ),                      
+                                new THREE.MeshBasicMaterial( { map: texture2 } ),                      
+                                new THREE.MeshBasicMaterial( { map: texture3 } ),                      
+                                new THREE.MeshBasicMaterial( { map: texture4 } ),                      
+                                new THREE.MeshBasicMaterial( { map: texture5 } ))                
+                                                                   
+			const geometry = new THREE.BoxGeometry();
+			const cube = new THREE.Mesh( geometry, cubeMaterials );
+			scene.add( cube );
+
+			camera.position.z = 5;
+
+			const animate = function () {
+				requestAnimationFrame( animate );
+
+				cube.rotation.x += 0.01;
+				cube.rotation.y += 0.01;
+
+				renderer.render( scene, camera );
+			};
+
+            animate();
+
+			
+
+		</script>
+	</body>
+</html>
