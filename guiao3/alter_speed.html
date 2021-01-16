@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>lol</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+		<script>
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+            
+            const textureLoader = new THREE.TextureLoader();                             
+            const texture = textureLoader.load( 'earth_surface_2048.jpg' ); 
+            const geometry = new THREE.SphereGeometry(1,32,32 );
+            var material = new THREE.MeshPhongMaterial({
+				map: texture,
+				specular: '#9ccc9c',
+				shininess: 100
+            });
+            //const material = new THREE.MeshBasicMaterial( {map: texture} );            
+            const sphere = new THREE.Mesh( geometry, material );
+            scene.add( sphere );
+
+            camera.position.z = 5;
+            sphere.rotation.z=0.41
+
+            var rotationSpeedY = 0.0025;
+            var rotationSpeedX = 0;
+
+			const animate = function () {
+				requestAnimationFrame( animate );
+
+				sphere.rotation.y += rotationSpeedY;
+                sphere.rotation.x += rotationSpeedX;
+
+				renderer.render( scene, camera );
+			};
+
+            animate();
+            const directionalLight = new THREE.DirectionalLight( 0xffffff, 1,0,0 );
+			scene.add( directionalLight );
+
+			const alight = new THREE.AmbientLight(0x333333);
+			scene.add(alight);
+         
+            document.addEventListener("keydown", onDocumentKeyDown, false);
+
+            function increaseYSpeed(){ rotationSpeedY += 0.0025; }
+
+            function decreaseYSpeed(){ rotationSpeedY -= 0.0025; }
+
+            function increaseXSpeed(){ rotationSpeedX += 0.0025; }
+            
+            function decreaseXSpeed(){ rotationSpeedX -= 0.0025; }
+
+            function increaseZRotation() { sphere.rotation.z += 0.1; }
+
+            function decreaseZRotation() { sphere.rotation.z -= 0.1; }
+
+            function onDocumentKeyDown(event){ 
+                // Get the key code of the pressed key 
+                var keyCode = event.which;
+                console.log("tecla " + keyCode);
+
+                switch (keyCode){
+                    case 38: increaseYSpeed(); break;
+                    case 40: decreaseYSpeed(); break;
+                    case 37: decreaseXSpeed(); break;
+                    case 39: increaseXSpeed(); break;
+                    case 33: increaseZRotation(); break;
+                    case 34: decreaseZRotation(); break;
+                }
+
+            }
+			
+			
+
+		</script>
+	</body>
+</html>

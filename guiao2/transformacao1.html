@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Transformacao Rotacao e Escala</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+        <script src="OrbitControls.js"></script>
+        <script src="TrackballControls.js"></script>
+		<script>
+			const scene = new THREE.Scene();
+
+			const camera = new THREE.OrthographicCamera( window.innerWidth / - 50, window.innerWidth / 50, window.innerHeight / 50, window.innerHeight / -50, - 500, 1000);
+            const renderer = new THREE.WebGLRenderer({antialias: true});
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+                // ADD CONTROLER:
+            const controls = new THREE.TrackballControls(camera, renderer.domElement)
+            //controls.update() must be called after any manual changes to the camera's transform
+            camera.position.set( 0, 0, 5 );
+            controls.update();
+
+            const car = new THREE.Object3D();
+            
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshBasicMaterial( {
+                color: 0x003dff, 
+                opacity: 0.7, 
+                transparent: true } );
+            const cube = new THREE.Mesh( geometry, material );
+
+            cube.scale.set(2,1,4)
+
+            const geometry_sphere = new THREE.SphereGeometry( 0.5 );
+            var material_sphere = new THREE.MeshPhongMaterial({
+				shading: THREE.SmoothShading	});
+            material_sphere.color = new THREE.Color(0.75164, 0.60648 , 0.22648);
+            material_sphere.specular= new THREE.Color(0.628281, 0.555802, 0.366065);
+            material_sphere.shininess = 0.4 * 256;
+            const sphere = new THREE.Mesh( geometry_sphere, material_sphere );
+            const sphere2 = new THREE.Mesh(geometry_sphere, material_sphere );
+            const sphere3 = new THREE.Mesh( geometry_sphere, material_sphere );
+            const sphere4 = new THREE.Mesh( geometry_sphere, material_sphere );
+
+            sphere.position.x = -1    
+            sphere2.position.x = 1    
+            sphere3.position.x = -1   
+            sphere4.position.x = 1    
+
+            sphere.position.z = -2
+            sphere2.position.z = -2
+            sphere3.position.z = 2
+            sphere4.position.z = 2
+
+            sphere.position.y = -0.5
+            sphere2.position.y = -0.5
+            sphere3.position.y = -0.5
+            sphere4.position.y = -0.5
+
+            car.add(sphere);
+            car.add(sphere2);
+            car.add( cube );
+            car.add(sphere3);
+            car.add(sphere4);
+
+            camera.position.z = 5   ;
+            
+            scene.add(car);
+
+            const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+			scene.add( directionalLight );
+
+			const alight = new THREE.AmbientLight(0xffffff);
+            scene.add(alight);
+            
+            
+            // ANIMATE FUNCTION:
+            var animate = function () {
+                requestAnimationFrame( animate );
+                controls.update();
+                renderer.render( scene, camera );
+            };
+            animate();
+
+			renderer.render( scene, camera );
+
+		</script>
+	</body>
+</html>
